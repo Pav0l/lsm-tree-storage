@@ -196,3 +196,28 @@ func TestRedBlackTree_Insert(t *testing.T) {
 		}
 	})
 }
+
+func TestRedBlackTree_Search(t *testing.T) {
+
+	t.Run("finds an existing key", func(t *testing.T) {
+		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
+		rbt := setupTree(keys[:])
+
+		result := rbt.Search("111", rbt.Root)
+
+		if result != "111" {
+			t.Error("Invalid search result, expected:", "111", "received:", result)
+		}
+	})
+
+	t.Run("returns \"\" when key does not exist", func(t *testing.T) {
+		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
+		rbt := setupTree(keys[:])
+
+		result := rbt.Search("99", rbt.Root)
+
+		if result != "" {
+			t.Error("Invalid search result, expected:", "", "received:", result)
+		}
+	})
+}

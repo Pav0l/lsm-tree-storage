@@ -25,6 +25,21 @@ func (rbt *RedBlackTree) Insert(key string) *Node {
 	return rbt.Root
 }
 
+// Search finds a key in the tree
+func (rbt *RedBlackTree) Search(key string, root *Node) string {
+	if root.key == key {
+		return root.key
+	}
+
+	if root.left != nil && key < root.key {
+		return rbt.Search(key, root.left)
+	} else if root.right != nil && key > root.key {
+		return rbt.Search(key, root.right)
+	}
+
+	return ""
+}
+
 func (rbt *RedBlackTree) rotateLeft(n *Node) {
 	newParent := n.right
 	if newParent == nil {
