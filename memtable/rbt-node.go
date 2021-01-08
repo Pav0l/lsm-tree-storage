@@ -12,6 +12,7 @@ const (
 type Node struct {
 	Color  color
 	key    string
+	value  string
 	parent *Node
 	left   *Node
 	right  *Node

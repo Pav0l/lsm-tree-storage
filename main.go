@@ -23,10 +23,14 @@ func main() {
 		key, value = writeQue.Dequeue()
 		fmt.Printf("key: %s, value: %s\n", key, value)
 
-		rbt.Insert(key)
+		rbt.Insert(key, value)
 	}
 
 	fmt.Println("rbt size:", rbt.Size)
 	fmt.Println("rbt root:", rbt.Root)
+
+	key, val := rbt.Search("kick", rbt.Root)
+	fmt.Printf("Found value \"%s\" for key \"%s\"\n", val, key)
+
 	fmt.Println("end")
 }

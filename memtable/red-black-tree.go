@@ -7,9 +7,9 @@ type RedBlackTree struct {
 }
 
 // Insert creates a node with value and adds it to the tree
-func (rbt *RedBlackTree) Insert(key string) *Node {
+func (rbt *RedBlackTree) Insert(key, value string) *Node {
 	// insert new node and color it red
-	n := Node{Color: Red, key: key}
+	n := Node{Color: Red, key: key, value: value}
 
 	rbt.insertNode(&n, rbt.Root)
 
@@ -26,9 +26,9 @@ func (rbt *RedBlackTree) Insert(key string) *Node {
 }
 
 // Search finds a key in the tree
-func (rbt *RedBlackTree) Search(key string, root *Node) string {
+func (rbt *RedBlackTree) Search(key string, root *Node) (string, string) {
 	if root.key == key {
-		return root.key
+		return root.key, root.value
 	}
 
 	if root.left != nil && key < root.key {
@@ -37,7 +37,7 @@ func (rbt *RedBlackTree) Search(key string, root *Node) string {
 		return rbt.Search(key, root.right)
 	}
 
-	return ""
+	return key, ""
 }
 
 func (rbt *RedBlackTree) rotateLeft(n *Node) {

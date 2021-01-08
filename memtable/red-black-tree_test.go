@@ -126,11 +126,15 @@ func TestRedBlackTree_insertNode(t *testing.T) {
 	})
 }
 
-func setupTree(keys []string) *RedBlackTree {
+func setupTree(keys, values []string) *RedBlackTree {
+	if len(keys) != len(values) {
+		panic("number of keys and values does not match")
+	}
+
 	rbt := new(RedBlackTree)
 
 	for i := 0; i < len(keys); i++ {
-		rbt.Insert(keys[i])
+		rbt.Insert(keys[i], values[i])
 	}
 	return rbt
 }
@@ -138,7 +142,7 @@ func TestRedBlackTree_Insert(t *testing.T) {
 
 	t.Run("rotates around grandparent", func(t *testing.T) {
 		keys := []string{"7", "6", "5"}
-		rbt := setupTree(keys[:])
+		rbt := setupTree(keys[:], keys[:])
 
 		type result struct {
 			expectedVal, receivedVal     string
@@ -165,7 +169,7 @@ func TestRedBlackTree_Insert(t *testing.T) {
 
 	t.Run("multiple rotations and recolors", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
-		rbt := setupTree(keys[:])
+		rbt := setupTree(keys[:], keys[:])
 
 		type result struct {
 			expectedVal, receivedVal     string
@@ -201,23 +205,30 @@ func TestRedBlackTree_Search(t *testing.T) {
 
 	t.Run("finds an existing key", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
-		rbt := setupTree(keys[:])
+		values := []string{"100", "50", "20", "40", "45", "120", "110", "90", "WIN"}
+		rbt := setupTree(keys[:], values[:])
 
-		result := rbt.Search("111", rbt.Root)
+		key, value := rbt.Search("111", rbt.Root)
 
-		if result != "111" {
-			t.Error("Invalid search result, expected:", "111", "received:", result)
+		if key != "111" {
+			t.Error("Invalid search result, expected:", "111", "received:", key)
+		}
+		if value != "WIN" {
+			t.Error("Invalid search result, expected:", "WIN", "received:", value)
 		}
 	})
 
 	t.Run("returns \"\" when key does not exist", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
-		rbt := setupTree(keys[:])
+		rbt := setupTree(keys[:], keys[:])
 
-		result := rbt.Search("99", rbt.Root)
+		key, value := rbt.Search("99", rbt.Root)
 
-		if result != "" {
-			t.Error("Invalid search result, expected:", "", "received:", result)
+		if key != "99" {
+			t.Error("Invalid search result, expected:", "99", "received:", key)
+		}
+		if value != "" {
+			t.Error("Invalid search result, expected:", "", "received:", value)
 		}
 	})
 }
