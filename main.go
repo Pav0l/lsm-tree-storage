@@ -26,7 +26,7 @@ func main() {
 		rbt.Insert(key, value)
 	}
 
-	fmt.Println("rbt size:", rbt.Size)
+	fmt.Println("rbt size:", rbt.Size, "bytes")
 	fmt.Println("rbt root:", rbt.Root)
 
 	key, val := rbt.Search("kick", rbt.Root)

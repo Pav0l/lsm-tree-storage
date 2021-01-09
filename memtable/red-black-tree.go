@@ -2,7 +2,7 @@ package memtable
 
 // RedBlackTree holds the tree data structure
 type RedBlackTree struct {
-	Size uint
+	Size int
 	Root *Node
 }
 
@@ -20,7 +20,7 @@ func (rbt *RedBlackTree) Insert(key, value string) *Node {
 		rbt.Root = GetParent(rbt.Root)
 	}
 
-	rbt.Size++
+	rbt.Size += n.EstimateSize()
 
 	return rbt.Root
 }

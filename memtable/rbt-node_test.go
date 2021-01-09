@@ -43,6 +43,24 @@ func TestNode_InvertColor(t *testing.T) {
 	})
 }
 
+func TestNode_EstimateSize(t *testing.T) {
+	t.Run("Default size", func(t *testing.T) {
+		n := Node{}
+		size := n.EstimateSize()
+		if size != 64 {
+			t.Errorf("Default size of Node is not correct, expected: %v, received %v", 64, size)
+		}
+	})
+
+	t.Run("Size with key, value strings", func(t *testing.T) {
+		n := Node{key: "kung", value: "fu"}
+		size := n.EstimateSize()
+		if size != 70 {
+			t.Errorf("Default size of Node is not correct, expected: %v, received %v", 70, size)
+		}
+	})
+}
+
 func TestGetParent(t *testing.T) {
 	t.Run("with parent", func(t *testing.T) {
 		parent := GetParent(&child)

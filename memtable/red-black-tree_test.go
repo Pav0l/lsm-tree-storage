@@ -138,11 +138,23 @@ func setupTree(keys, values []string) *RedBlackTree {
 	}
 	return rbt
 }
+
+func getInputSize(keys, values []string) (expectedTreeSize int) {
+	if len(keys) != len(values) {
+		panic("number of keys and values does not match")
+	}
+	for i := 0; i < len(keys); i++ {
+		n := Node{key: keys[i], value: values[i]}
+		expectedTreeSize += n.EstimateSize()
+	}
+	return
+}
+
 func TestRedBlackTree_Insert(t *testing.T) {
 
 	t.Run("rotates around grandparent", func(t *testing.T) {
 		keys := []string{"7", "6", "5"}
-		rbt := setupTree(keys[:], keys[:])
+		rbt := setupTree(keys, keys)
 
 		type result struct {
 			expectedVal, receivedVal     string
@@ -162,14 +174,15 @@ func TestRedBlackTree_Insert(t *testing.T) {
 			}
 		}
 
-		if actual := rbt.Size; actual != uint(len(keys)) {
-			t.Error("Invalid tree size, expected:", len(keys), "received:", actual)
+		expectedTreeSize := getInputSize(keys, keys)
+		if actual := rbt.Size; actual != expectedTreeSize {
+			t.Error("Invalid tree size, expected:", expectedTreeSize, "received:", actual)
 		}
 	})
 
 	t.Run("multiple rotations and recolors", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
-		rbt := setupTree(keys[:], keys[:])
+		rbt := setupTree(keys, keys)
 
 		type result struct {
 			expectedVal, receivedVal     string
@@ -195,8 +208,9 @@ func TestRedBlackTree_Insert(t *testing.T) {
 			}
 		}
 
-		if actual := rbt.Size; actual != uint(len(keys)) {
-			t.Error("Invalid tree size, expected:", len(keys), "received:", actual)
+		expectedTreeSize := getInputSize(keys, keys)
+		if actual := rbt.Size; actual != expectedTreeSize {
+			t.Error("Invalid tree size, expected:", expectedTreeSize, "received:", actual)
 		}
 	})
 }
@@ -206,7 +220,7 @@ func TestRedBlackTree_Search(t *testing.T) {
 	t.Run("finds an existing key", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
 		values := []string{"100", "50", "20", "40", "45", "120", "110", "90", "WIN"}
-		rbt := setupTree(keys[:], values[:])
+		rbt := setupTree(keys, values)
 
 		key, value := rbt.Search("111", rbt.Root)
 
@@ -220,7 +234,7 @@ func TestRedBlackTree_Search(t *testing.T) {
 
 	t.Run("returns \"\" when key does not exist", func(t *testing.T) {
 		keys := []string{"100", "50", "20", "40", "45", "120", "110", "90", "111"}
-		rbt := setupTree(keys[:], keys[:])
+		rbt := setupTree(keys, keys)
 
 		key, value := rbt.Search("99", rbt.Root)
 

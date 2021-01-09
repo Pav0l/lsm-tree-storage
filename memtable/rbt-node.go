@@ -1,11 +1,18 @@
 package memtable
 
+import "unsafe"
+
 type color bool
 
 // Red and Black are a colors of RBT
 const (
 	Red   color = false
 	Black color = true
+)
+
+// EmptyNodeSize is the default size of Node in bytes
+const (
+	EmptyNodeSize int = int(unsafe.Sizeof(Node{}))
 )
 
 // Node serves as basic node in Red-black tree
@@ -25,6 +32,11 @@ func (n *Node) InvertColor() {
 	} else {
 		n.Color = Black
 	}
+}
+
+// EstimateSize returns calculated size of Node in bytes
+func (n *Node) EstimateSize() int {
+	return EmptyNodeSize + len(n.key) + len(n.value)
 }
 
 // GetParent returns the Parent node
