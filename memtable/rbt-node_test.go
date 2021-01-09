@@ -29,20 +29,6 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestNode_InvertColor(t *testing.T) {
-	n := Node{Color: Black}
-	t.Run("InvertColor", func(t *testing.T) {
-		n.InvertColor()
-		if n.Color != Red {
-			t.Errorf("InvertColor has failed, expected: %t, received %t", Red, n.Color)
-		}
-		n.InvertColor()
-		if n.Color != Black {
-			t.Errorf("InvertColor has failed, expected: %t, received %t", Black, n.Color)
-		}
-	})
-}
-
 func TestNode_EstimateSize(t *testing.T) {
 	t.Run("Default size", func(t *testing.T) {
 		n := Node{}

@@ -25,15 +25,6 @@ type Node struct {
 	right  *Node
 }
 
-// InvertColor of the Node on which this method is called on
-func (n *Node) InvertColor() {
-	if n.Color == Black {
-		n.Color = Red
-	} else {
-		n.Color = Black
-	}
-}
-
 // EstimateSize returns calculated size of Node in bytes
 func (n *Node) EstimateSize() int {
 	return EmptyNodeSize + len(n.key) + len(n.value)
