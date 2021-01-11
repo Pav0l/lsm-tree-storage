@@ -32,6 +32,6 @@ Pet project to play around with Go and LSM tree data store
 
 - CSV as file format for simplicity
 - Engine crash recovery (no memtable snapshots)
-- No pevention of partial writes in case of crash
+- No prevention of partial writes in case of crash
 - No Bloom filter for faster reads
 - ???
